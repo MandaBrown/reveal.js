@@ -1,25 +1,6 @@
 ToDo: Come up with a better name. 'Data Warehousing for Fun and Profit'?
 ToDo: Replace ~ lines with something a little bit more regular markdown friendly.
 
-### All About The
-## Data Warehouse
-
-<pre><!-- Using pre instead of backticks because I can't make backticks stop syntax highlighting. -->
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-               +–––––––––––––+               +–––––––––––––––––+
-               |             |    ETL        |                 |
-               |             +––––––––––––––>|                 |
-               |   Apangea   |               |    Data         |
-               |             |               |    Warehouse    |
-               |             |<-–––––––––––––+                 |
-               |             |    Reports    |                 |
-               +–––––––––––––+               +–––––––––––––––––+
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-</pre>
-
 
 ### What's a data warehouse,
 #### and why do we have one?
