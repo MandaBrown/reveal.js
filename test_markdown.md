@@ -1,3 +1,6 @@
+ToDo: Come up with a better name. 'Data Warehousing for Fun and Profit'?
+ToDo: Replace ~ lines with something a little bit more regular markdown friendly.
+
 ### All About The
 ## Data Warehouse
 
@@ -30,8 +33,8 @@
 
 ### What is the data model like?
 
-- Facts
-- Dimensions
+- Facts - ours
+- Dimensions - ours
   - SCD
 
 
@@ -48,6 +51,10 @@
 
 - How to run and test it
   - http://localhost:3000/status
+
+---
+
+Databases & Testing
 
 ---
 
@@ -99,17 +106,27 @@
 
 - [GitHub repo][activewarehouse-etl_repo]
 
-- What is it?
+
 - Initial Load
+  - reload_reporting
+    - clean_reporting
+    - load_dimensions - can do only new
+    - load_facts
+
+
 - Incremental Load
   - Extracts from apangea (sharded or master) based on max id (or date, depending) to file in the same directory as the ctl files (attempt_fact.txt)
     - OR - Runs from file of that name in that location already
     - uses a csv parser to process tab-delimited data
     - we provide source_columns
 
+
+
   - Serialize original row to store original values (at least in attempt) **Processors**
   - Transforms **Transformers**
     - Match ids to warehouse versions of ids (foreign key lookups for date (SCDResolvers, attempt date))
+
+
 
   - checks if unresolved
     - checks if SCD resolvers worked (fields have a value)
@@ -117,15 +134,80 @@
     - can also pass in your own method that needs to return a map of unresolved fields
     - dumps record into unresolved_records in etl database
 
+
+
   - After processing (transformers & processors), file is dumped to tmp/<table_name>_etl.csv
   - That file is bulk imported into the warehouse database
   - attempt_fact.txt is deleted (tmp csv is left behind, but overwritten every time)
+
+
 
   - persists the max id that was processed
 
 
 - How does this happen in production
   - Scalr Jobs
+
+
+    - queue job
+      - ProcessEtlWorker.perform
+        - run_etl
+          - goes through control files & processes them
+          - incremental_etl.ebf
+          ```ruby
+          run 'classroom_dimension.ctl'
+          run 'customer_dimension.ctl'
+          run 'district_dimension.ctl'
+          run 'empty_district_dimension.ctl'
+          run 'math_lesson_dimension.ctl'
+          run 'pathway_dimension.ctl'
+          run 'school_dimension.ctl'
+          run 'student_dimension.ctl'
+          run 'teacher_dimension.ctl'
+          run 'donateable_dimension.ctl'
+          run 'standard_dimension.ctl'
+
+          run 'attempt_fact.ctl'
+          run 'donation_fact.ctl'
+          run 'hint_view_fact.ctl'
+          run 'lesson_completed_fact.ctl'
+          run 'live_help_fact.ctl'
+          run 'placement_test_completed_fact.ctl'
+          ```
+        - aggregate
+
+        ```ruby
+          def aggregate
+            AttemptByDateStudentClassroomAggregate.aggregate!
+            LessonLeaderboardAggregate.aggregate_incremental!
+            PointLeaderboardAggregate.aggregate_incremental!
+            ClassroomAggregator.new.aggregate
+            StudentDeleter.new.delete_students!
+            LiveHelpFact.aggregate_incremental!
+            LessonProjector.new.project_lessons!
+            ProjectsArraysToTables.project_all!
+          end
+          ```
+
+
+    - Aggregate data
+    ```ruby
+    facts = [
+      HintViewFact,
+      PlacementTestCompletedFact,
+      LiveHelpFact,
+      LessonCompletedFact,
+      AttemptFact,
+    ]
+
+    # We are truncating and then aggregating here to get around an issue
+    # involving data not getting aggregated for that day after this runs.
+    # We could speed it up by removing the truncation, but we'd need to be
+    # smart about aggregating data already in the agg table for the same date
+    # as this rake task is being run.
+    ```
+      - truncate aggregates
+      - aggregate all
 
 
 - Control Files
