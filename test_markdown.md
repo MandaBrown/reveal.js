@@ -16,15 +16,11 @@ ToDo: Replace ~ lines with something a little bit more regular markdown friendly
 
 Databases & Testing
 
-- Attempt Archiving?
 - Data Warehouse Events
 
 
-
-- Databases
-  - ETL
-  - Warehouse
-- Dependent Facts
+- Dependent Facts - when do we build them
+- process enrollment fixes
 
 ---
 

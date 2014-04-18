@@ -16,6 +16,8 @@
 
 </pre>
 
+*When there's trouble you call DW!*
+
 ---
 
 ###  What's a data warehouse,
@@ -271,13 +273,14 @@ For each control file:
   - Student deletion
   - Lesson Projection
   - Array Projection
+  - Dependent Facts
 
 - The incremental ETL process also does limited aggregation.
 
 
 #### Initial Load
 
-Similar to incremental load, but with optimizations for loading up a lot of data.
+Similar to incremental load, but with optimizations for loading up a lot of data, and includes archived data.
 
 ---
 
@@ -299,3 +302,20 @@ Similar to incremental load, but with optimizations for loading up a lot of data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 </pre>
+
+*This diagram is a little bit misleading; the warehouse is passive.*
+
+
+#### Displaying the data in Apangea
+
+- Paul actually wrote up a [very nice decription](https://github.com/thinkthroughmath/apangea/blob/rc/app/assets/javascripts/dashboard/DASHBOARD_WIDGETS.md#what-happens-when-the-fetcher-starts) of how the data is populated in the dashboard.
+- Reports are cached in redis.
+- You can reset the cache with:
+```ruby
+rake reporting:clear_cache
+```
+
+---
+
+<img src='http://www.totalmediabridge.com/wp-content/uploads/2013/06/darkwing-duck.jpg' alt='DW' />
+### Let's get dangerous.
