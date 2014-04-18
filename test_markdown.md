@@ -37,27 +37,7 @@ ToDo: Replace ~ lines with something a little bit more regular markdown friendly
 
 Databases & Testing
 
----
-
-## Apangea
-
-<pre><!-- Using pre instead of backticks because I can't make backticks stop syntax highlighting. -->
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-               +*************+               +–––––––––––––––––+
-               *             *    ETL        |                 |
-               *             +––––––––––––––>|                 |
-               *   Apangea   *               |    Data         |
-               *             *               |    Warehouse    |
-               *             *<-–––––––––––––+                 |
-               *             *    Reports    |                 |
-               +*************+               +–––––––––––––––––+
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-</pre>
-
----
+- Attempt Archiving?
 
 ## ETL
 
